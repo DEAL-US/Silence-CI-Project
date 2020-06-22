@@ -78,8 +78,23 @@ def try_register_ok():
         if k != "password":
             assert data[k] == resp_user[k]
 
+def try_register_repeated():
+    data = {
+        "email": "pruebas@company.com",
+        "password": "pruebas",
+        "departmentId": None,
+        "bossId": 1,
+        "firstName": "Pepito",
+        "lastName": "Pruebas",
+        "salary": 1337.00,
+    }
+    r = requests.post(BASE_URL + "/register", json=data)
+    assert r.status_code == 400
+
 def run():
+    print("Testing /register...")
     try_register_no_user()
     try_register_no_password()
     try_register_repeated_email()
     try_register_ok()
+    try_register_repeated()
