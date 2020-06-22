@@ -1,3 +1,3 @@
-import requests
+import test_register
 
-assert 1 == 2
+test_register.run()
