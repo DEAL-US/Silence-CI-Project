@@ -1,7 +1,7 @@
 import requests
 from werkzeug.security import check_password_hash
 
-from base import BASE_URL
+from utils import BASE_URL
 
 def get_all_employees():
     return requests.get(BASE_URL + "/employees").json()

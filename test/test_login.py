@@ -1,6 +1,6 @@
 import requests
 
-from base import BASE_URL
+from utils import BASE_URL
 
 def try_login_empty():
     data = {}
