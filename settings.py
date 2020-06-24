@@ -19,7 +19,7 @@ DEBUG_ENABLED = False
 
 # Database connection details
 DB_CONN = {
-    "host": "localhost",
+    "host": "127.0.0.1",
     "port": 3306,
     "username": dbuser,
     "password": dbpwd,

@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://localhost:8080/api"
+BASE_URL = "http://127.0.0.1:8080/api"
 
 def get_token():
     # We assume that the testing user exists, as created by the register test
