@@ -27,7 +27,8 @@ def get_by_id():
     sql="INSERT INTO Employees \
          (email, password, departmentId, bossId, firstName, lastName, salary) \
          VALUES \
-         ($email, $password, $departmentId, $bossId, $firstName, $lastName, $salary)"
+         ($email, $password, $departmentId, $bossId, $firstName, $lastName, $salary)",
+    auth_required=True,
 )
 def add(email, password, departmentId, bossId, firstName, lastName, salary):
     if not firstName or not lastName:
@@ -41,7 +42,8 @@ def add(email, password, departmentId, bossId, firstName, lastName, salary):
     sql="UPDATE Employees SET email = $email, password = $password, \
          departmentId = $departmentId, bossId = $bossId, firstName = $firstName, \
          lastName = $lastName, salary = $salary \
-         WHERE employeeId = $employeeId"
+         WHERE employeeId=$employeeId",
+    auth_required=True,
 )
 def update(email, password, departmentId, bossId, firstName, lastName, salary):
     pass
@@ -51,7 +53,8 @@ def update(email, password, departmentId, bossId, firstName, lastName, salary):
 @endpoint(
     route="/employees/$employeeId",
     method="DELETE",
-    sql="DELETE FROM Employees WHERE employeeId = $employeeId"
+    sql="DELETE FROM Employees WHERE employeeId = $employeeId",
+    auth_required=True,
 )
 def delete():
     pass

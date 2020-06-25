@@ -56,107 +56,220 @@ def try_get_all_paginated():
             page += 1
 
 def try_get_one_ok():
-    dpmts = get_all()
+    emps = get_all()
 
-    for dpmt in dpmts:
-        dpmt_id = dpmt["departmentId"]
-        r = requests.get(f"{BASE_URL}/employees/{dpmt_id}")
+    for emp in emps:
+        emp_id = emp["employeeId"]
+        r = requests.get(f"{BASE_URL}/employees/{emp_id}")
         assert r.status_code == 200
         resp = r.json()
         assert len(resp) == 1
-        assert r.json()[0] == dpmt
+        assert r.json()[0] == emp
 
 def try_get_one_not_exists():
     r = requests.get(f"{BASE_URL}/employees/2522461635631")
     assert r.status_code == 404
 
 def try_create_unauthorized():
-    dpmts_before = get_all()
-    data = {"name": "Department of testing", "city": "Testingville"}
+    emps_before = get_all()
+    data = {
+        "email": "testing_employee@company.com",
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+
     r = requests.post(f"{BASE_URL}/employees", data=data)
-    dpmts_after = get_all()
+    emps_after = get_all()
     assert r.status_code == 401
-    assert dpmts_before == dpmts_after
+    assert emps_before == emps_after
+
+
+def try_create_repeated_email():
+    emps_before = get_all()
+    email = emps_before[0]["email"]
+    data = {
+        "email": email,
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+
+    headers = {"Token": get_token()}
+
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    emps_after = get_all()
+    assert r.status_code == 400
+    assert emps_before == emps_after
+
+def try_create_no_password():
+    emps_before = get_all()
+
+    data = {
+        "email": "testing_employee@company.com",
+        "password": None,
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+
+    headers = {"Token": get_token()}
+
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    emps_after = get_all()
+    assert r.status_code == 400
+    assert emps_before == emps_after
+
+def try_create_no_name():
+    emps_before = get_all()
+
+    data = {
+        "email": "testing_employee@company.com",
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+
+    headers = {"Token": get_token()}
+
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    emps_after = get_all()
+    assert r.status_code == 400
+    assert emps_before == emps_after
+
+def try_create_invalid_salary():
+    emps_before = get_all()
+
+    data = {
+        "email": "testing_employee@company.com",
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": -420,
+    }
+
+    headers = {"Token": get_token()}
+
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    emps_after = get_all()
+    assert r.status_code == 400
+    assert emps_before == emps_after
 
 def try_create_ok():
-    dpmts_before = get_all()
-    token = get_token()
-    headers = {"Token": token}
-    data = {"name": "Department of testing", "city": "Testingville"}
+    emps_before = get_all()
+
+    data = {
+        "email": "testing_employee@company.com",
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+
+    headers = {"Token": get_token()}
+
     r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
-    dpmts_after = get_all()
+    emps_after = get_all()
     assert r.status_code == 200
-    assert len(dpmts_before) + 1 == len(dpmts_after)
+
+    assert len(emps_before) + 1 == len(emps_after)
     createdId = r.json()["lastId"]
 
     created = requests.get(f"{BASE_URL}/employees/{createdId}").json()[0]
     for field in data:
         assert data[field] == created[field]
 
-def try_create_repeated():
-    dpmts_before = get_all()
-    token = get_token()
-    headers = {"Token": token}
-    data = {"name": "Department of testing", "city": "Testingville"}
-    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
-    dpmts_after = get_all()
-    assert r.status_code == 400
-    assert len(dpmts_before) == len(dpmts_after)
-
 def try_edit_unauthorized():
-    dpmt = get_all()[0]
-    dpmt_id = dpmt["departmentId"]
+    emp = get_all()[0]
+    emp_id = emp["employeeId"]
 
-    data = {"name": "Tests Department", "city": "Land of Testing"}
-    r = requests.put(f"{BASE_URL}/employees/{dpmt_id}", data=data)
+    data = {
+        "email": "testing_employee@company.com",
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+    r = requests.put(f"{BASE_URL}/employees/{emp_id}", data=data)
     
     assert r.status_code == 401
-    dpmt_after = requests.get(f"{BASE_URL}/employees/{dpmt_id}").json()[0]
-    assert dpmt == dpmt_after
+    emp_after = requests.get(f"{BASE_URL}/employees/{emp_id}").json()[0]
+    assert emp == emp_after
 
 def try_edit_ok():
-    dpmt = get_all()[0]
-    dpmt_id = dpmt["departmentId"]
+    emp = get_all()[0]
+    emp_id = emp["employeeId"]
 
-    token = get_token()
-    headers = {"Token": token}
-    data = {"name": "Tests Department", "city": "Land of Testing"}
-    r = requests.put(f"{BASE_URL}/employees/{dpmt_id}", data=data, headers=headers)
+    data = {
+        "email": "new_testing_employee@company.com",
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+    headers = {"Token": get_token()}
+    r = requests.put(f"{BASE_URL}/employees/{emp_id}", data=data, headers=headers)
     
     assert r.status_code == 200
-    dpmt_after = requests.get(f"{BASE_URL}/employees/{dpmt_id}").json()[0]
+    emp_after = requests.get(f"{BASE_URL}/employees/{emp_id}").json()[0]
     for field in data:
-        assert data[field] == dpmt_after[field]
+        assert data[field] == emp_after[field]
 
 def try_delete_unauthorized():
-    dpmts_before = get_all()
-    dpmt = dpmts_before[0]
-    dpmt_id = dpmt["departmentId"]
+    emps_before = get_all()
+    emp = emps_before[0]
+    emp_id = emp["employeeId"]
 
-    r = requests.delete(f"{BASE_URL}/employees/{dpmt_id}")
-    dpmts_after = get_all()
+    r = requests.delete(f"{BASE_URL}/employees/{emp_id}")
+    emps_after = get_all()
     
     assert r.status_code == 401
-    assert dpmts_after == dpmts_before
+    assert emps_after == emps_before
 
 def try_delete_ok():
-    dpmts_first = get_all()
-    token = get_token()
-    headers = {"Token": token}
-    data = {"name": "Department to be deleted", "city": "Nowhere"}
+    emps_first = get_all()
+    data = {
+        "email": "employee_to_delete@company.com",
+        "password": "testing",
+        "departmentId": 1,
+        "bossId": None,
+        "firstName": "Testing",
+        "lastName": "Employee",
+        "salary": 1337,
+    }
+    headers = {"Token": get_token()}
 
     r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     assert r.status_code == 200
+
     insertedId = r.json()["lastId"]
-    dpmts_after_insert = get_all()
-    assert len(dpmts_after_insert) == len(dpmts_first) + 1
+    emps_after_insert = get_all()
+    assert len(emps_after_insert) == len(emps_first) + 1
     r = requests.get(f"{BASE_URL}/employees/{insertedId}")
     assert r.status_code == 200
 
     r = requests.delete(f"{BASE_URL}/employees/{insertedId}", headers=headers)
     assert r.status_code == 200
-    dpmts_after_delete = get_all()
-    assert dpmts_after_delete == dpmts_first
+    emps_after_delete = get_all()
+    assert emps_after_delete == emps_first
     r = requests.get(f"{BASE_URL}/employees/{insertedId}")
 
 def run():
@@ -164,12 +277,15 @@ def run():
     try_get_all_sorted()
     try_get_all_filtered()
     try_get_all_paginated()
-    #try_get_one_ok()
-    #try_get_one_not_exists()
-    #try_create_unauthorized()
-    #try_create_ok()
-    #try_create_repeated()
-    #try_edit_unauthorized()
-    #try_edit_ok()
-    #try_delete_unauthorized()
-    #try_delete_ok()
+    try_get_one_ok()
+    try_get_one_not_exists()
+    try_create_unauthorized()
+    try_create_repeated_email()
+    try_create_no_password()
+    try_create_no_name()
+    try_create_invalid_salary()
+    try_create_ok()
+    try_edit_unauthorized()
+    try_edit_ok()
+    try_delete_unauthorized()
+    try_delete_ok()
