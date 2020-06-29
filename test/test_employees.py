@@ -1,6 +1,6 @@
 import requests
 
-from utils import BASE_URL, get_token
+from utils import BASE_URL, get_token, Min
 
 def get_all():
     r = requests.get(BASE_URL + "/employees")
@@ -17,10 +17,14 @@ def try_get_all_sorted():
             assert r.status_code == 200
             sorted_api = r.json()
             for e1, e2 in zip(sorted_api, sorted_api[1:]):
+                attr1, attr2 = e1[attr], e2[attr]
+                if attr1 is None: attr1 = Min
+                if attr2 is None: attr2 = Min
+
                 if order == "asc":
-                    assert str(e1[attr]) <= str(e2[attr])
+                    assert attr1 <= attr2
                 else:
-                    assert str(e1[attr]) >= str(e2[attr])
+                    assert attr1 >= attr2
 
 def try_get_all_filtered():
     filtered_pairs = []
