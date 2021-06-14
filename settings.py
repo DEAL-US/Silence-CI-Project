@@ -1,14 +1,14 @@
 import re
 
-RE_DB = re.compile(r"create database (?:if not exists)?\s+(.*);", re.I)
-RE_USER = re.compile(r"create user (?:if not exists)?\s*'(.*?)'.*identified by '(.*?)';", re.I)
+RE_USER = re.compile(r"MYSQL_USER:\s*(\w+)", re.I)
+RE_PWD = re.compile(r"MYSQL_PASSWORD:\s*(\w+)", re.I)
+RE_DB = re.compile(r"MYSQL_DATABASE:\s*(\w+)", re.I)
 
-travis_yml = open("../.travis.yml", "r", encoding="utf-8").read()
+ci_yml = open("../.github/workflows/ci_test.yml", "r", encoding="utf-8").read()
 
-dbname = RE_DB.search(travis_yml).group(1)
-user_m = RE_USER.search(travis_yml)
-dbuser = user_m.group(1)
-dbpwd = user_m.group(2)
+dbuser = RE_USER.search(ci_yml).group(1)
+dbpwd = RE_PWD.search(ci_yml).group(1)
+dbname = RE_DB.search(ci_yml).group(1)
 
 ###############################################################################
 # Project-specific settings
