@@ -1,6 +1,5 @@
 import requests
 from werkzeug.security import check_password_hash
-import json
 
 from utils import BASE_URL
 
@@ -39,8 +38,7 @@ def try_register_no_password():
 
 def try_register_repeated_email():
     emps_before = get_all_employees()
-    emps_before = json.loads(emps_before)
-    print(emps_before)
+    print(emps_before)[0]
 
     data = {
         "email": emps_before[0]["email"],
