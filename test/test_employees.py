@@ -3,7 +3,7 @@ import requests
 from utils import BASE_URL, get_token, Min
 
 def get_all():
-    r = requests.get(BASE_URL + "/Employees")
+    r = requests.get(BASE_URL + "/employees")
     assert r.status_code == 200
     return r.json()
 
@@ -13,7 +13,7 @@ def try_get_all_sorted():
     emps = get_all()
     for attr in emps[0]:
         for order in ("asc", "desc"):
-            r = requests.get(f"{BASE_URL}/Employees?_sort={attr}&_order={order}")
+            r = requests.get(f"{BASE_URL}/employees?_sort={attr}&_order={order}")
             assert r.status_code == 200
             sorted_api = r.json()
             for e1, e2 in zip(sorted_api, sorted_api[1:]):
@@ -37,7 +37,7 @@ def try_get_all_filtered():
             if pair in filtered_pairs: continue
             filtered_pairs.append(pair)
 
-            r = requests.get(f"{BASE_URL}/Employees?{attr}={val}")
+            r = requests.get(f"{BASE_URL}/employees?{attr}={val}")
             assert r.status_code == 200
             filtered_emps = list(filter(lambda x: x[attr] == val, emps))
             api_res = r.json()
@@ -51,7 +51,7 @@ def try_get_all_paginated():
     for limit in range(1, n_emps + 1):
         page = 0
         while limit * page < n_emps:
-            r = requests.get(f"{BASE_URL}/Employees?_limit={limit}&_page={page}")
+            r = requests.get(f"{BASE_URL}/employees?_limit={limit}&_page={page}")
             assert r.status_code == 200
             api_res = r.json()
             paginated = emps[limit * page:limit * (page + 1)]
@@ -64,14 +64,14 @@ def try_get_one_ok():
 
     for emp in emps:
         emp_id = emp["employeeId"]
-        r = requests.get(f"{BASE_URL}/Employees/{emp_id}")
+        r = requests.get(f"{BASE_URL}/employees/{emp_id}")
         assert r.status_code == 200
         resp = r.json()
         assert len(resp) == 1
         assert r.json()[0] == emp
 
 def try_get_one_not_exists():
-    r = requests.get(f"{BASE_URL}/Employees/2522461635631")
+    r = requests.get(f"{BASE_URL}/employees/2522461635631")
     assert r.status_code == 404
 
 def try_create_unauthorized():
@@ -86,7 +86,7 @@ def try_create_unauthorized():
         "salary": 1337,
     }
 
-    r = requests.post(f"{BASE_URL}/Employees", data=data)
+    r = requests.post(f"{BASE_URL}/employees", data=data)
     emps_after = get_all()
     assert r.status_code == 401
     assert emps_before == emps_after
@@ -107,7 +107,7 @@ def try_create_repeated_email():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -127,7 +127,7 @@ def try_create_no_password():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -146,7 +146,7 @@ def try_create_no_name():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -166,7 +166,7 @@ def try_create_invalid_salary():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -186,14 +186,14 @@ def try_create_ok():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 200
 
     assert len(emps_before) + 1 == len(emps_after)
     createdId = r.json()["lastId"]
 
-    created = requests.get(f"{BASE_URL}/Employees/{createdId}").json()[0]
+    created = requests.get(f"{BASE_URL}/employees/{createdId}").json()[0]
     for field in data:
         assert data[field] == created[field]
 
@@ -210,10 +210,10 @@ def try_edit_unauthorized():
         "lastName": "Employee",
         "salary": 1337,
     }
-    r = requests.put(f"{BASE_URL}/Employees/{emp_id}", data=data)
+    r = requests.put(f"{BASE_URL}/employees/{emp_id}", data=data)
     
     assert r.status_code == 401
-    emp_after = requests.get(f"{BASE_URL}/Employees/{emp_id}").json()[0]
+    emp_after = requests.get(f"{BASE_URL}/employees/{emp_id}").json()[0]
     assert emp == emp_after
 
 def try_edit_ok():
@@ -230,10 +230,10 @@ def try_edit_ok():
         "salary": 1337,
     }
     headers = {"Token": get_token()}
-    r = requests.put(f"{BASE_URL}/Employees/{emp_id}", data=data, headers=headers)
+    r = requests.put(f"{BASE_URL}/employees/{emp_id}", data=data, headers=headers)
     
     assert r.status_code == 200
-    emp_after = requests.get(f"{BASE_URL}/Employees/{emp_id}").json()[0]
+    emp_after = requests.get(f"{BASE_URL}/employees/{emp_id}").json()[0]
     for field in data:
         assert data[field] == emp_after[field]
 
@@ -242,7 +242,7 @@ def try_delete_unauthorized():
     emp = emps_before[0]
     emp_id = emp["employeeId"]
 
-    r = requests.delete(f"{BASE_URL}/Employees/{emp_id}")
+    r = requests.delete(f"{BASE_URL}/employees/{emp_id}")
     emps_after = get_all()
     
     assert r.status_code == 401
@@ -261,20 +261,20 @@ def try_delete_ok():
     }
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     assert r.status_code == 200
 
     insertedId = r.json()["lastId"]
     emps_after_insert = get_all()
     assert len(emps_after_insert) == len(emps_first) + 1
-    r = requests.get(f"{BASE_URL}/Employees/{insertedId}")
+    r = requests.get(f"{BASE_URL}/employees/{insertedId}")
     assert r.status_code == 200
 
-    r = requests.delete(f"{BASE_URL}/Employees/{insertedId}", headers=headers)
+    r = requests.delete(f"{BASE_URL}/employees/{insertedId}", headers=headers)
     assert r.status_code == 200
     emps_after_delete = get_all()
     assert emps_after_delete == emps_first
-    r = requests.get(f"{BASE_URL}/Employees/{insertedId}")
+    r = requests.get(f"{BASE_URL}/employees/{insertedId}")
 
 def run():
     print("Testing /employees...")

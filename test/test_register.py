@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash
 from utils import BASE_URL
 
 def get_all_employees():
-    return requests.get(BASE_URL + "/Employees").json()
+    return requests.get(BASE_URL + "/employees").json()
 
 def try_register_no_user():
     data = {
