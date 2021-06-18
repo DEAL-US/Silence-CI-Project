@@ -13,7 +13,7 @@ def try_get_all_sorted():
     emps = get_all()
     for attr in emps[0]:
         for order in ("asc", "desc"):
-            r = requests.get(f"{BASE_URL}/employees?_sort={attr}&_order={order}")
+            r = requests.get(f"{BASE_URL}/Employees?_sort={attr}&_order={order}")
             assert r.status_code == 200
             sorted_api = r.json()
             for e1, e2 in zip(sorted_api, sorted_api[1:]):
@@ -37,7 +37,7 @@ def try_get_all_filtered():
             if pair in filtered_pairs: continue
             filtered_pairs.append(pair)
 
-            r = requests.get(f"{BASE_URL}/employees?{attr}={val}")
+            r = requests.get(f"{BASE_URL}/Employees?{attr}={val}")
             assert r.status_code == 200
             filtered_emps = list(filter(lambda x: x[attr] == val, emps))
             api_res = r.json()
@@ -51,7 +51,7 @@ def try_get_all_paginated():
     for limit in range(1, n_emps + 1):
         page = 0
         while limit * page < n_emps:
-            r = requests.get(f"{BASE_URL}/employees?_limit={limit}&_page={page}")
+            r = requests.get(f"{BASE_URL}/Employees?_limit={limit}&_page={page}")
             assert r.status_code == 200
             api_res = r.json()
             paginated = emps[limit * page:limit * (page + 1)]
@@ -86,7 +86,7 @@ def try_create_unauthorized():
         "salary": 1337,
     }
 
-    r = requests.post(f"{BASE_URL}/employees", data=data)
+    r = requests.post(f"{BASE_URL}/Employees", data=data)
     emps_after = get_all()
     assert r.status_code == 401
     assert emps_before == emps_after
@@ -107,7 +107,7 @@ def try_create_repeated_email():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -127,7 +127,7 @@ def try_create_no_password():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -146,7 +146,7 @@ def try_create_no_name():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -166,7 +166,7 @@ def try_create_invalid_salary():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 400
     assert emps_before == emps_after
@@ -186,7 +186,7 @@ def try_create_ok():
 
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
     emps_after = get_all()
     assert r.status_code == 200
 
@@ -261,7 +261,7 @@ def try_delete_ok():
     }
     headers = {"Token": get_token()}
 
-    r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
+    r = requests.post(f"{BASE_URL}/Employees", data=data, headers=headers)
     assert r.status_code == 200
 
     insertedId = r.json()["lastId"]
