@@ -1,4 +1,5 @@
 import requests
+from silence.logging.default_logger import logger
 
 from utils import BASE_URL, get_token, Min
 
@@ -165,15 +166,38 @@ def try_delete_ok():
 
 def run():
     print("Testing /departments...")
+    logger.warning("testing getting all departments sorted.")
     try_get_all_sorted()
+
+    logger.warning("testing getting all departments filtered.")
     try_get_all_filtered()
+
+    logger.warning("testing getting all departments paginated.")
     try_get_all_paginated()
+
+    logger.warning("testing getting one department.")
     try_get_one_ok()
+
+    logger.warning("testing getting nonexistent department.")
     try_get_one_not_exists()
+
+    logger.warning("testing getting one department unauthorized.")
     try_create_unauthorized()
+
+    logger.warning("testing creating one department.")
     try_create_ok()
+
+    logger.warning("testing creating one department that already exists")
     try_create_repeated()
+
+    logger.warning("testing editing one department aunauthorized")
     try_edit_unauthorized()
-    try_edit_ok()
+
+    logger.warning("testing editing one department")
+    try_edit_ok()   
+    
+    logger.warning("testing deleting one department aunauthorized")
     try_delete_unauthorized()
+
+    logger.warning("testing deliting one department")
     try_delete_ok()

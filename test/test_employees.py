@@ -1,4 +1,5 @@
 import requests
+from silence.logging.default_logger import logger
 
 from utils import BASE_URL, get_token, Min
 

@@ -1,5 +1,7 @@
 import requests
 from werkzeug.security import check_password_hash
+from silence.logging.default_logger import logger
+
 
 from utils import BASE_URL
 
