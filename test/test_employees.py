@@ -279,18 +279,47 @@ def try_delete_ok():
 
 def run():
     print("Testing /employees...")
+    logger.warning("testing getting all employees sorted.")
     try_get_all_sorted()
+
+    logger.warning("testing getting all employees filtered.")
     try_get_all_filtered()
+
+    logger.warning("testing getting all employees paginated.")
     try_get_all_paginated()
+
+    logger.warning("testing getting one employees.")
     try_get_one_ok()
+
+    logger.warning("testing getting one employee nonexistent.")
     try_get_one_not_exists()
+
+    logger.warning("testing getting one employee unauthorized.")
     try_create_unauthorized()
+    
+    logger.warning("testing creating employee with existing unique email.")
     try_create_repeated_email()
+    
+    logger.warning("testing creating employee without providing password.")
     try_create_no_password()
+    
+    logger.warning("testing creating employee without providing name.")
     try_create_no_name()
+    
+    logger.warning("testing creating employee without invalid salary.")
     try_create_invalid_salary()
+    
+    logger.warning("testing creating employee")
     try_create_ok()
+    
+    logger.warning("testing editing employee unauthorized")
     try_edit_unauthorized()
+    
+    logger.warning("testing editing employee")
     try_edit_ok()
+    
+    logger.warning("testing deleting employee unauthorized")
     try_delete_unauthorized()
+    
+    logger.warning("testing deleting employee")
     try_delete_ok()

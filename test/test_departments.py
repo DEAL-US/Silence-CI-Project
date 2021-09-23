@@ -199,5 +199,5 @@ def run():
     logger.warning("testing deleting one department aunauthorized")
     try_delete_unauthorized()
 
-    logger.warning("testing deliting one department")
+    logger.warning("testing deleting one department")
     try_delete_ok()

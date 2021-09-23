@@ -55,9 +55,21 @@ def try_login_ok():
 
 def run():
     print("Testing /login...")
+    
+    logger.warning("testing login empty fields")
     try_login_empty()
+    
+    logger.warning("testing login empty password")
     try_login_no_password()
+    
+    logger.warning("testing login empty user")
     try_login_no_id()
+    
+    logger.warning("testing login incorrect user")
     try_login_incorrect_email()
+    
+    logger.warning("testing login incorrect password")
     try_login_incorrect_password()
+    
+    logger.warning("testing login success")
     try_login_ok()

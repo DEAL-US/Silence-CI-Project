@@ -95,8 +95,17 @@ def try_register_repeated():
 
 def run():
     print("Testing /register...")
+    logger.warning("testing register no user")
     try_register_no_user()
+    
+    logger.warning("testing register no password")
     try_register_no_password()
+    
+    logger.warning("testing register non unique email")
     try_register_repeated_email()
+    
+    logger.warning("testing register success")
     try_register_ok()
+    
+    logger.warning("testing register existing")
     try_register_repeated()
