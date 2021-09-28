@@ -10,6 +10,12 @@ def get_all():
 
 ###############################################################################
 
+def try_get_from_view_topemployees():
+    r = requests.get(f"{BASE_URL}/topemployees")
+    assert r.status_code == 200
+    top_emps = r.json()
+    assert all(emp["salary"] > 2000 for emp in top_emps)
+
 def try_get_all_sorted():
     emps = get_all()
     for attr in emps[0]:
@@ -279,6 +285,10 @@ def try_delete_ok():
 
 def run():
     print("Testing /employees...")
+
+    logger.warning("Testing getting top employees from a view")
+    try_get_from_view_topemployees()
+
     logger.warning("testing getting all employees sorted.")
     try_get_all_sorted()
 

@@ -17,6 +17,7 @@ CREATE TABLE Employees (
   firstName VARCHAR(256) NOT NULL,
   lastName VARCHAR(256) NOT NULL,
   salary DOUBLE DEFAULT 2000,
+  position VARCHAR(256),
   FOREIGN KEY (departmentId) REFERENCES Departments (departmentId) ON DELETE SET NULL,
   FOREIGN KEY (bossId) REFERENCES Employees (employeeId),
   CONSTRAINT validSalary CHECK (salary > 0)

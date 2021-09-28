@@ -30,7 +30,8 @@ DB_CONN = {
 # be ran when the 'silence createdb' command is issued
 SQL_SCRIPTS = [
     "create_tables.sql",
-    "populate_database.sql"
+    "create_views.sql",
+    "populate_database.sql",
 ]
 
 # The port in which the API and the web server will be deployed
@@ -44,4 +45,8 @@ USER_AUTH_DATA = {
     "table": "Employees",
     "identifier": "email",
     "password": "password",
+    "role": "position",
 }
+# A random string that is used for security purposes
+# (this has been generated automatically upon project creation)
+SECRET_KEY = "OcLUVQUSY-Mksq884rJ1utlSQUmTq9i9YsJdk5trScI"

@@ -1,0 +1,16 @@
+{
+    "loggedId": {
+        "route": "/employees/logged",
+        "method": "GET",
+        "sql": "SELECT * FROM Employees WHERE employeeId = $loggedId",
+        "auth_required": false
+    },
+
+    "loggedId_with_restr": {
+        "route": "/employees/logged_restricted",
+        "method": "GET",
+        "sql": "SELECT * FROM Employees WHERE employeeId = $loggedId",
+        "auth_required": true,
+        "allowed_roles": ["CEO"]
+    }
+}

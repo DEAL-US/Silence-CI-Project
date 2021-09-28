@@ -11,6 +11,17 @@ def get_token():
     assert "sessionToken" in resp
     return resp["sessionToken"]
 
+def get_token_for_user(email):
+    if email is None:
+        return None
+    
+    data = {"email": email, "password": email.split("@")[0]}
+    r = requests.post(f"{BASE_URL}/login", data=data)
+    assert r.status_code == 200
+    resp = r.json()
+    assert "sessionToken" in resp
+    return resp["sessionToken"]
+
 # https://stackoverflow.com/questions/12971631/sorting-list-by-an-attribute-that-can-be-none
 from functools import total_ordering
 
