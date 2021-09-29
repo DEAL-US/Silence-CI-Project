@@ -1,1 +1,1 @@
-Work in progress.
+This project performs a series of tests on itself to automatically test and detect bugs in the Silence framework.
