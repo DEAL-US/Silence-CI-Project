@@ -47,6 +47,3 @@ USER_AUTH_DATA = {
     "password": "password",
     "role": "position",
 }
-# A random string that is used for security purposes
-# (this has been generated automatically upon project creation)
-SECRET_KEY = "OcLUVQUSY-Mksq884rJ1utlSQUmTq9i9YsJdk5trScI"
