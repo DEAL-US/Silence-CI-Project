@@ -52,9 +52,6 @@ def try_only_ceo():
 def run():
     print("Testing role restrictions...")
     
-    logger.warning("Testing free access")
-    try_free_access()
-
     logger.warning("Testing only logged")
     try_only_logged()
 
@@ -63,3 +60,6 @@ def run():
 
     logger.warning("Testing only CEO")
     try_only_ceo()
+
+    logger.warning("Testing free access")
+    try_free_access()
