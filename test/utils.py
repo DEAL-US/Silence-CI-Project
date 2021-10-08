@@ -17,6 +17,10 @@ def get_token_for_user(email):
     
     data = {"email": email, "password": email.split("@")[0]}
     r = requests.post(f"{BASE_URL}/login", data=data)
+
+    # print(f"provided data {data}")
+    # print(f"returned resquest {r.json()}")
+
     assert r.status_code == 200
     resp = r.json()
     assert "sessionToken" in resp
