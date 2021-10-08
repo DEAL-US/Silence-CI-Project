@@ -20,21 +20,21 @@ def try_endpoint_with_user(route, email, expected_access):
 ###############################################################################
 
 def try_free_access():
-    route = "/departments/freeAccess"
+    route = "departments/freeAccess"
     try_endpoint_with_user(route, None, expected_access=True)
     
     for emp in get_employees():
         try_endpoint_with_user(route, emp["email"], expected_access=True)
 
 def try_only_logged():
-    route = "/departments/onlyLogged"
+    route = "departments/onlyLogged"
     try_endpoint_with_user(route, None, expected_access=False)
     
     for emp in get_employees():
         try_endpoint_with_user(route, emp["email"], expected_access=True)
 
 def try_only_manager_or_ceo():
-    route = "/departments/onlyManagerOrCEO"
+    route = "departments/onlyManagerOrCEO"
     try_endpoint_with_user(route, None, expected_access=False)
     
     for emp in get_employees():
@@ -42,7 +42,7 @@ def try_only_manager_or_ceo():
         try_endpoint_with_user(route, emp["email"], expected_access=can_access)
 
 def try_only_ceo():
-    route = "/departments/onlyCEO"
+    route = "departments/onlyCEO"
     try_endpoint_with_user(route, None, expected_access=False)
     
     for emp in get_employees():
@@ -51,6 +51,9 @@ def try_only_ceo():
 
 def run():
     print("Testing role restrictions...")
+
+    logger.warning("Testing free access")
+    try_free_access()
     
     logger.warning("Testing only logged")
     try_only_logged()
@@ -60,6 +63,3 @@ def run():
 
     logger.warning("Testing only CEO")
     try_only_ceo()
-
-    logger.warning("Testing free access")
-    try_free_access()
