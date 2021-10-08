@@ -4,11 +4,11 @@ RE_USER = re.compile(r"MYSQL_USER:\s*(\w+)", re.I)
 RE_PWD = re.compile(r"MYSQL_PASSWORD:\s*(\w+)", re.I)
 RE_DB = re.compile(r"MYSQL_DATABASE:\s*(\w+)", re.I)
 
-ci_yml = open("../.github/workflows/ci_test.yml", "r", encoding="utf-8").read()
+# ci_yml = open("../.github/workflows/ci_test.yml", "r", encoding="utf-8").read()
 
-dbuser = RE_USER.search(ci_yml).group(1)
-dbpwd = RE_PWD.search(ci_yml).group(1)
-dbname = RE_DB.search(ci_yml).group(1)
+# dbuser = RE_USER.search(ci_yml).group(1)
+# dbpwd = RE_PWD.search(ci_yml).group(1)
+# dbname = RE_DB.search(ci_yml).group(1)
 
 ###############################################################################
 # Project-specific settings
@@ -21,9 +21,9 @@ DEBUG_ENABLED = False
 DB_CONN = {
     "host": "127.0.0.1",
     "port": 3306,
-    "username": dbuser,
-    "password": dbpwd,
-    "database": dbname,
+    "username": "silence",
+    "password": "123456",
+    "database": "example_project",
 }
 
 # The sequence of SQL scripts located in the sql/ folder that must
@@ -47,3 +47,5 @@ USER_AUTH_DATA = {
     "password": "password",
     "role": "position",
 }
+
+SECRET_KEY = "Oa5zN4hEfL6RAeY24YBDQra2fUC_iaaY6Af4O-Uo37U"
