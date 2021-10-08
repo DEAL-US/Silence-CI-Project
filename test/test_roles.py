@@ -10,7 +10,7 @@ def try_endpoint_with_user(route, email, expected_access):
     headers = {"Token": token}
 
     r = requests.get(f"{BASE_URL}/{route}", headers=headers)
-    print(r)
+    print(r.json)
     expected_code = 200 if expected_access else 401
     try:
         assert r.status_code == expected_code
