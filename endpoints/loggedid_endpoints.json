@@ -3,7 +3,7 @@
         "route": "/employees/logged",
         "method": "GET",
         "sql": "SELECT * FROM Employees WHERE employeeId = $loggedId",
-        "auth_required": false
+        "auth_required": true
     },
 
     "loggedId_with_restr": {

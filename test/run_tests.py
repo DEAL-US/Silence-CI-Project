@@ -16,9 +16,9 @@ tests = [
     test_register,
     test_login,
     test_roles,
-    test_loggedId,
-    test_departments,
-    test_employees,
+    # test_loggedId,
+    # test_departments,
+    # test_employees,
 ]
 
 failed_tests = []
