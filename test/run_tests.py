@@ -6,6 +6,7 @@ import test_summary
 import test_register
 import test_login
 import test_roles
+import test_banned
 import test_loggedId
 import test_departments
 import test_employees
@@ -16,9 +17,10 @@ tests = [
     test_register,
     test_login,
     test_roles,
-    # test_loggedId,
-    # test_departments,
-    # test_employees,
+    test_banned,
+    test_loggedId,
+    test_departments,
+    test_employees,
 ]
 
 failed_tests = []

@@ -1,5 +1,6 @@
 import re
 
+#FOR production
 RE_USER = re.compile(r"MYSQL_USER:\s*(\w+)", re.I)
 RE_PWD = re.compile(r"MYSQL_PASSWORD:\s*(\w+)", re.I)
 RE_DB = re.compile(r"MYSQL_DATABASE:\s*(\w+)", re.I)
@@ -10,6 +11,12 @@ dbuser = RE_USER.search(ci_yml).group(1)
 dbpwd = RE_PWD.search(ci_yml).group(1)
 dbname = RE_DB.search(ci_yml).group(1)
 
+#FOR TESTING
+# dbuser = ""
+# dbpwd = ""
+# dbname = ""
+
+# SECRET_KEY = ""
 ###############################################################################
 # Project-specific settings
 ###############################################################################
@@ -46,4 +53,6 @@ USER_AUTH_DATA = {
     "identifier": "email",
     "password": "password",
     "role": "position",
+    "active_status": "isActive"
 }
+

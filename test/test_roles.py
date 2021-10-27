@@ -12,9 +12,6 @@ def try_endpoint_with_user(route, email, expected_access):
     r = requests.get(f"{BASE_URL}/{route}", headers=headers)
     expected_code = 200 if expected_access else 401
 
-    print(f"the petition returned: {r.json()}")
-    print(f"status codes are equal?: {r.status_code} = {expected_code}\n")
-    
     try:
         assert int(r.status_code) == int(expected_code)
     except AssertionError:
