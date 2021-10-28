@@ -4,7 +4,9 @@
 
 .vscode/
 *_auto.js
+_*.js
 endpoints/default/
+endpoints/auto/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
