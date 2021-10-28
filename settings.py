@@ -11,11 +11,6 @@ dbuser = RE_USER.search(ci_yml).group(1)
 dbpwd = RE_PWD.search(ci_yml).group(1)
 dbname = RE_DB.search(ci_yml).group(1)
 
-#FOR TESTING
-# dbuser = ""
-# dbpwd = ""
-# dbname = ""
-
 ###############################################################################
 # Project-specific settings
 ###############################################################################

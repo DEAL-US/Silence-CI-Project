@@ -91,6 +91,7 @@ def try_create_unauthorized():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
 
     r = requests.post(f"{BASE_URL}/employees", data=data)
@@ -110,6 +111,7 @@ def try_create_repeated_email():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
 
     headers = {"Token": get_token()}
@@ -130,6 +132,7 @@ def try_create_no_password():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
 
     headers = {"Token": get_token()}
@@ -149,6 +152,7 @@ def try_create_no_name():
         "bossId": None,
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
 
     headers = {"Token": get_token()}
@@ -169,6 +173,7 @@ def try_create_invalid_salary():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": -420,
+        "isActive": 1,
     }
 
     headers = {"Token": get_token()}
@@ -189,12 +194,14 @@ def try_create_ok():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
 
     headers = {"Token": get_token()}
 
     r = requests.post(f"{BASE_URL}/employees", data=data, headers=headers)
     emps_after = get_all()
+    print(r.json())
     assert r.status_code == 200
 
     assert len(emps_before) + 1 == len(emps_after)
@@ -216,6 +223,7 @@ def try_edit_unauthorized():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
     r = requests.put(f"{BASE_URL}/employees/{emp_id}", data=data)
     
@@ -235,6 +243,7 @@ def try_edit_ok():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
     headers = {"Token": get_token()}
     r = requests.put(f"{BASE_URL}/employees/{emp_id}", data=data, headers=headers)
@@ -265,6 +274,7 @@ def try_delete_ok():
         "firstName": "Testing",
         "lastName": "Employee",
         "salary": 1337,
+        "isActive": 1,
     }
     headers = {"Token": get_token()}
 
