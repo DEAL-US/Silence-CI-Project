@@ -1,2 +1,2 @@
 CREATE VIEW TopEmployees AS
-  SELECT * FROM Employees WHERE salary > 2000;
+  SELECT * FROM employees WHERE salary > 2000;
