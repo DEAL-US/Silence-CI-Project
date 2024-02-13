@@ -5,7 +5,10 @@ RE_USER = re.compile(r"MYSQL_USER:\s*(\w+)", re.I)
 RE_PWD = re.compile(r"MYSQL_PASSWORD:\s*(\w+)", re.I)
 RE_DB = re.compile(r"MYSQL_DATABASE:\s*(\w+)", re.I)
 
-ci_yml = open("./.github/workflows/ci_test.yml", "r", encoding="utf-8").read()
+# for local testing add the .github folder at the same level as the CI project, then swap these lines.
+# ci_yml = open("./.github/workflows/ci_test.yml", "r", encoding="utf-8").read() 
+ci_yml = open("../.github/workflows/ci_test.yml", "r", encoding="utf-8").read()
+
 
 dbuser = RE_USER.search(ci_yml).group(1)
 dbpwd = RE_PWD.search(ci_yml).group(1)
