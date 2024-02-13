@@ -1,10 +1,10 @@
-INSERT INTO Departments (departmentId, name, city)
+INSERT INTO departments (departmentId, name, city)
     VALUES
 	(1, 'Arte', 'Cádiz'),
 	(2, 'Historia', NULL),
 	(3, 'Informática', 'Sevilla');
 
-INSERT INTO Employees (employeeId, email, password, departmentId, bossId, firstName, lastName, salary, position, isActive)
+INSERT INTO employees (employeeId, email, password, departmentId, bossId, firstName, lastName, salary, position, isActive)
     VALUES
 	(1, "perianez@company.com", "pbkdf2:sha256:150000$E0m6fWQ4$75d0c4b1ac12a29db992372fcb5310ab585d3ff78851c476751d0b8254dfc2ae", 1, NULL, 'Pedro', 'Periáñez', 2300, 'Manager', TRUE),
 	(2, "jimenez@company.com", "pbkdf2:sha256:150000$KrIt4AMI$11e887644fe162e8f5aadc20837380049c6dfed091e786fe5b4e9a5b1c2c6452", 1, 1, 'José', 'Jiménez', 2500, 'CEO', TRUE),
