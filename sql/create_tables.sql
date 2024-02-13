@@ -19,7 +19,7 @@ CREATE TABLE employees (
   salary DOUBLE DEFAULT 2000,
   position VARCHAR(256),
   isActive BOOLEAN NOT NULL,
-  FOREIGN KEY (departmentId) REFERENCES Departments (departmentId) ON DELETE SET NULL,
-  FOREIGN KEY (bossId) REFERENCES Employees (employeeId),
+  FOREIGN KEY (departmentId) REFERENCES departments (departmentId) ON DELETE SET NULL,
+  FOREIGN KEY (bossId) REFERENCES employees (employeeId),
   CONSTRAINT validSalary CHECK (salary > 0)
 );
