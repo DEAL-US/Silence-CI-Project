@@ -53,5 +53,5 @@ USER_AUTH_DATA = {
     "active_status": "isActive"
 }
 
-# for local testing.
-# SECRET_KEY = '1234'
+# for local testing add a secret key here.
+
