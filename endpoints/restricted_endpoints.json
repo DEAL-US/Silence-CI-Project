@@ -2,21 +2,21 @@
     "freeAccess": {
         "route": "/departments/freeAccess",
         "method": "GET",
-        "sql": "SELECT * FROM Departments",
+        "sql": "SELECT * FROM departments",
         "auth_required": false
     },
 
     "onlyLogged": {
         "route": "/departments/onlyLogged",
         "method": "GET",
-        "sql": "SELECT * FROM Departments",
+        "sql": "SELECT * FROM departments",
         "auth_required": true
     },
 
     "onlyManagerOrCEO": {
         "route": "/departments/onlyManagerOrCEO",
         "method": "GET",
-        "sql": "SELECT * FROM Departments",
+        "sql": "SELECT * FROM departments",
         "auth_required": true,
         "allowed_roles": ["Manager", "CEO"]
     },
@@ -24,7 +24,7 @@
     "onlyCEO": {
         "route": "/departments/onlyCEO",
         "method": "GET",
-        "sql": "SELECT * FROM Departments",
+        "sql": "SELECT * FROM departments",
         "auth_required": true,
         "allowed_roles": ["CEO"]
     }
